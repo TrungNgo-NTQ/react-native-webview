@@ -19,7 +19,7 @@
 
 static NSTimer *keyboardTimer;
 static NSString *const HistoryShimName = @"ReactNativeHistoryShim";
-static NSString *const MessageHandlerName = @"ReactNativeWebView";
+static NSString *const MessageHandlerName = @"ios_signUpWithGoogle";
 static NSURLCredential* clientAuthenticationCredential;
 static NSDictionary* customCertificatesForHost;
 
