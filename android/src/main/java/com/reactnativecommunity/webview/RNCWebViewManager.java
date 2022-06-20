@@ -148,6 +148,8 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
   protected static final String HTML_ENCODING = "UTF-8";
   protected static final String HTML_MIME_TYPE = "text/html";
   protected static final String JAVASCRIPT_INTERFACE = "ReactNativeWebView";
+    protected static final String JAVASCRIPT_ANDROIDLOGIN = "androidLogin";
+
   protected static final String HTTP_METHOD_POST = "POST";
   // Use `webView.loadUrl("about:blank")` to reliably reset the view
   // state and release page resources (including any running JavaScript).
@@ -1624,8 +1626,11 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
       if (enabled) {
         addJavascriptInterface(createRNCWebViewBridge(this), JAVASCRIPT_INTERFACE);
+        addJavascriptInterface(createRNCWebViewBridge(this), JAVASCRIPT_ANDROIDLOGIN);
+
       } else {
         removeJavascriptInterface(JAVASCRIPT_INTERFACE);
+        removeJavascriptInterface(JAVASCRIPT_ANDROIDLOGIN);
       }
     }
 
@@ -1769,6 +1774,11 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
       @JavascriptInterface
       public void postMessage(String message) {
         mContext.onMessage(message);
+      }
+
+      @JavascriptInterface
+      public void login(String token) {
+        mContext.onMessage("Name: androi_loginedJWT \n Body:" + token);
       }
     }
 
