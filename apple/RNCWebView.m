@@ -20,6 +20,8 @@
 static NSTimer *keyboardTimer;
 static NSString *const HistoryShimName = @"ReactNativeHistoryShim";
 static NSString *const MessageHandlerName = @"ios_signUpWithGoogle";
+static NSString *const ios_loginedJWT = @"ios_loginedJWT";
+
 static NSURLCredential* clientAuthenticationCredential;
 static NSDictionary* customCertificatesForHost;
 
@@ -472,6 +474,8 @@ NSString *const CUSTOM_SELECTOR = @"_CUSTOM_SELECTOR_";
     if (_webView) {
         [_webView.configuration.userContentController removeScriptMessageHandlerForName:HistoryShimName];
         [_webView.configuration.userContentController removeScriptMessageHandlerForName:MessageHandlerName];
+        [_webView.configuration.userContentController removeScriptMessageHandlerForName:ios_loginedJWT];
+
         [_webView removeObserver:self forKeyPath:@"estimatedProgress"];
         [_webView removeFromSuperview];
 #if !TARGET_OS_OSX
@@ -630,7 +634,13 @@ NSString *const CUSTOM_SELECTOR = @"_CUSTOM_SELECTOR_";
       [event addEntriesFromDictionary: @{@"data": message.body}];
       _onMessage(event);
     }
-  }
+  } else if ([message.name isEqualToString:ios_loginedJWT]) {
+      if (_onMessage) {
+        NSMutableDictionary<NSString *, id> *event = [self baseEvent];
+        [event addEntriesFromDictionary: @{@"data":  [NSString stringWithFormat:@"Name:%@; \n Body:%@", message.name, message.body]}];
+        _onMessage(event);
+      }
+    }
 }
 
 - (void)setSource:(NSDictionary *)source
