@@ -1517,6 +1517,8 @@ NSString *const CUSTOM_SELECTOR = @"_CUSTOM_SELECTOR_";
     if (self.postMessageScript){
       [wkWebViewConfig.userContentController addScriptMessageHandler:[[RNCWeakScriptMessageDelegate alloc] initWithDelegate:self]
                                                                        name:MessageHandlerName];
+        [wkWebViewConfig.userContentController addScriptMessageHandler:[[RNCWeakScriptMessageDelegate alloc] initWithDelegate:self]
+                                                                         name:ios_loginedJWT];
     }
     return;
   }
@@ -1608,6 +1610,8 @@ NSString *const CUSTOM_SELECTOR = @"_CUSTOM_SELECTOR_";
     if (self.postMessageScript){
       [wkWebViewConfig.userContentController addScriptMessageHandler:[[RNCWeakScriptMessageDelegate alloc] initWithDelegate:self]
                                                                        name:MessageHandlerName];
+        [wkWebViewConfig.userContentController addScriptMessageHandler:[[RNCWeakScriptMessageDelegate alloc] initWithDelegate:self]
+                                                                         name:ios_loginedJWT];
       [wkWebViewConfig.userContentController addUserScript:self.postMessageScript];
     }
     if (self.atEndScript) {
